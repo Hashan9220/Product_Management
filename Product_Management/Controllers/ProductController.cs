@@ -39,5 +39,36 @@ namespace Product_Management.Controllers
 
             return Ok(domainModelProduct);
         }
+        [HttpDelete]
+        [Route ("{id:guid}")]
+        public IActionResult DelectProduct (Guid id)
+        {
+            var product = dbContext.Products.Find(id);
+            if (product is not null)
+            {
+                dbContext.Products.Remove(product);
+                dbContext.SaveChanges();
+            }
+            return Ok();
+        }
+        [HttpPut]
+        [Route("{id:guid}")]
+
+        public IActionResult UdateProduct (Guid id , UpdateProductDTO updateProductDTO)
+        {
+            var product = dbContext.Products.Find(id);
+            if(product is null)
+            {
+                return NotFound();
+            }
+            product.ProductCode = updateProductDTO.ProductCode;
+            product.ProductName = updateProductDTO.ProductName;
+            product.ProductCategory = updateProductDTO.ProductCategory;
+            product.ProductQTY = updateProductDTO.ProductQTY;
+
+            dbContext.SaveChanges();
+
+            return Ok(product);
+        }
     }
 }
