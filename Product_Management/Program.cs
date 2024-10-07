@@ -9,8 +9,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddDbContext<ProductDbContext>(options => options.UseInMemoryDatabase("ProductDb"));
+//var connectionString = builder.Configuration.GetConnectionString("MySqlConn");
+builder.Services.AddDbContext<ProductDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("MySqlConn")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
